@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg
+*.egg-info/
+dist/
+build/
+ 
+# IDEs and editors
+.idea/
+.vscode/
+ 
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Environment files
+.env
+.venv
+
+# Logs
+*.log
+
+# Docker
+docker-compose.yml
+
+# Data
+*.csv
+*.json
+*.parquet
+
+# Config
+*.yml
+*.yaml
+
+
