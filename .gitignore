@@ -25,16 +25,11 @@ Thumbs.db
 # Logs
 *.log
 
-# Docker
-# docker-compose.yml
 
 # Data
 *.csv
 *.json
 *.parquet
 
-# Config
-*.yml
-*.yaml
 
 
