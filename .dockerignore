@@ -26,3 +26,10 @@ Thumbs.db
 *.csv
 *.json
 *.parquet
+
+# Config
+# *.yml
+# *.yaml
+
+# Docker
+# docker-compose.yml

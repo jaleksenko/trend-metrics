@@ -31,5 +31,9 @@ Thumbs.db
 *.json
 *.parquet
 
+# Config
+# *.yml
+# *.yaml
 
-
+# Docker
+# docker-compose.yml
