@@ -26,7 +26,7 @@ Thumbs.db
 *.log
 
 # Docker
-docker-compose.yml
+# docker-compose.yml
 
 # Data
 *.csv
