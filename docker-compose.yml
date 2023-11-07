@@ -196,7 +196,7 @@ services:
     command: >
       bash -c "
         cub kafka-ready -b broker:29092 1 60 &&
-        kafka-topics --create --topic messages --partitions 1 --replication-factor 1 --if-not-exists --bootstrap-server broker:29092
+        kafka-topics --create --topic feeds --partitions 1 --replication-factor 1 --if-not-exists --bootstrap-server broker:29092
       "
     environment:
       KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
