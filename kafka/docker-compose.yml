@@ -41,7 +41,8 @@ services:
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
-      KAFKA_LOG_RETENTION_HOURS: 720
+      # Add retention hours 30 days
+      KAFKA_LOG_RETENTION_HOURS: 720  
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
     networks:
       - network
