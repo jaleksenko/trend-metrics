@@ -1,0 +1,20 @@
+version: '3'
+services:
+  cassandra:
+    image: 'cassandra:latest'
+    environment:
+      - CASSANDRA_SEEDS=cassandra
+      - CASSANDRA_CLUSTER_NAME=myCluster
+      - CASSANDRA_DC=myDC
+      - CASSANDRA_RACK=myRack
+      - CASSANDRA_PASSWORD=cassandra
+    volumes:
+      - '/var/www/trend_metrics/cassandra/data:/var/lib/cassandra'
+    ports:
+      - '9042:9042'
+    networks:
+      - network
+
+networks:
+  network:
+    external: true

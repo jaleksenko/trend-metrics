@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg
+*.egg-info/
+dist/
+build/
+
+# IDEs and editors
+.idea/
+.vscode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+.venv
+
+# Data
+*.csv
+*.json
+*.parquet
+
+# Config
+# *.yml
+# *.yaml
+
+# Docker
+# docker-compose.yml
