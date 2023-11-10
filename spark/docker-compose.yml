@@ -43,10 +43,10 @@ services:
     image: bitnami/spark:latest
     networks:
       - network
-  command: >
-    /opt/bitnami/spark/bin/spark-shell
-    --conf spark.cassandra.connection.host=cassandra
-    --packages com.datastax.spark:spark-cassandra-connector_2.12:3.4.1
+    command: >
+      /opt/bitnami/spark/bin/spark-shell
+      --conf spark.cassandra.connection.host=cassandra
+      --packages com.datastax.spark:spark-cassandra-connector_2.12:3.4.1
 
 networks:
   network:
