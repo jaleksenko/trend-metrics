@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   spark-master:
     image: 'bitnami/spark:latest'
@@ -11,42 +11,52 @@ services:
     ports:
       - '7000:8080'
       - '7077:7077'
-    volumes:
-      - '/var/www/trend_metrics/spark/logs:/opt/bitnami/spark/logs'
-      # - '/var/www/trend_metrics/spark/conf:/opt/bitnami/spark/conf'
-      - '/var/www/trend_metrics/spark/apps:/opt/spark-apps'
-      - '/var/www/trend_metrics/spark/data:/opt/spark-data'
+    volumes:  
+      - './apps:/opt/bitnami/spark/apps'
+      - './data:/opt/bitnami/spark/data'
+      - './requirements.txt:/opt/bitnami/spark/requirements.txt'
+    command: >
+          bash -c "pip3 install -r /opt/bitnami/spark/requirements.txt &&
+           /opt/bitnami/spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \
+           /opt/bitnami/spark/apps/kafka_spark_streaming.py"
     networks:
       - network
 
-  spark-worker:
+  spark-worker1:
     image: 'bitnami/spark:latest'
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
-      - SPARK_WORKER_CORES=1
-      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=4G
       - SPARK_DAEMON_MEMORY=1G
     ports:
       - '7001:8081'
     volumes:
-      - '/var/www/trend_metrics/spark/logs:/opt/bitnami/spark/logs'
-      # - '/var/www/trend_metrics/spark/conf:/opt/bitnami/spark/conf'
-      - '/var/www/trend_metrics/spark/apps:/opt/spark-apps'
-      - '/var/www/trend_metrics/spark/data:/opt/spark-data'
+      - './apps:/opt/bitnami/spark/apps'
+      - './data:/opt/bitnami/spark/data'
     depends_on:
       - spark-master
     networks:
       - network
-  
-  spark-shell:
-    image: bitnami/spark:latest
+
+  spark-worker2:
+    image: 'bitnami/spark:latest'
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=4G
+      - SPARK_DAEMON_MEMORY=1G
+    ports:
+      - '7002:8081'
+    volumes:
+      - './apps:/opt/bitnami/spark/apps'
+      - './data:/opt/bitnami/spark/data'
+    depends_on:
+      - spark-master
     networks:
       - network
-    command: >
-      /opt/bitnami/spark/bin/spark-shell
-      --conf spark.cassandra.connection.host=cassandra
-      --packages com.datastax.spark:spark-cassandra-connector_2.12:3.4.1
 
 networks:
   network:
