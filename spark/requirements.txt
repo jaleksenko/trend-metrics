@@ -1,1 +1,4 @@
 pyspark==3.5.0
+scikit-learn
+nltk
+pandas
