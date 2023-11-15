@@ -32,5 +32,5 @@ COPY --chown=${NB_USER} ./data /home/${NB_USER}/data
 
 # The default command that runs when the container starts
 # CMD ["tail", "-f", "/dev/null"]
-CMD ["/usr/local/bin/spark-submit", "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,com.johnsnowlabs.nlp:spark-nlp_2.12:5.1.4", "/home/spark/apps/start.py"]
+CMD ["/usr/local/bin/spark-submit", "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,com.johnsnowlabs.nlp:spark-nlp_2.12:5.1.4", "/home/spark/apps/main.py"]
 
