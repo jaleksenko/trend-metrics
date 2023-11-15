@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   spark-master:
-    image: 'bitnami/spark:latest'
+    build: .
     environment:
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
@@ -12,18 +12,15 @@ services:
       - '7000:8080'
       - '7077:7077'
     volumes:  
-      - './apps:/opt/bitnami/spark/apps'
-      - './data:/opt/bitnami/spark/data'
-      - './requirements.txt:/opt/bitnami/spark/requirements.txt'
-    command: >
-          bash -c "pip3 install -r /opt/bitnami/spark/requirements.txt &&
-           /opt/bitnami/spark/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \
-           /opt/bitnami/spark/apps/kafka_spark_streaming.py"
+      - './apps:/home/spark/apps'
+      - './data:/home/spark/data'
+    # command: >
+    #   bash -c "tail -f /dev/null"
     networks:
       - network
 
   spark-worker1:
-    image: 'bitnami/spark:latest'
+    build: .
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
@@ -33,15 +30,15 @@ services:
     ports:
       - '7001:8081'
     volumes:
-      - './apps:/opt/bitnami/spark/apps'
-      - './data:/opt/bitnami/spark/data'
+      - './apps:/home/spark/apps'
+      - './data:/home/spark/data'
     depends_on:
       - spark-master
     networks:
       - network
 
   spark-worker2:
-    image: 'bitnami/spark:latest'
+    build: .
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
@@ -51,8 +48,8 @@ services:
     ports:
       - '7002:8081'
     volumes:
-      - './apps:/opt/bitnami/spark/apps'
-      - './data:/opt/bitnami/spark/data'
+      - './apps:/home/spark/apps'
+      - './data:/home/spark/data'
     depends_on:
       - spark-master
     networks:
@@ -61,4 +58,5 @@ services:
 networks:
   network:
     external: true
+
 

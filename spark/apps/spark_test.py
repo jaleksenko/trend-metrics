@@ -26,38 +26,3 @@ if __name__ == "__main__":
     main()
 
 
-
-
-from pyspark import SparkContext
-from pyspark.streaming import StreamingContext
-from pyspark.streaming.kafka import KafkaUtils
-
-def process_time(time, rdd):
-    # Получаем количество сообщений в RDD
-    count = rdd.count()
-    if count > 0:
-        with open("/opt/bitnami/spark/apps/kafka_result.txt", "a") as file:
-            file.write(f"{time}: Received {count} messages\n")
-
-if __name__ == "__main__":
-    # Создание Spark Context
-    sc = SparkContext(appName="KafkaSparkStreaming")
-    sc.setLogLevel("WARN")
-
-    # Создание Streaming Context с интервалом батча 15 минут
-    ssc = StreamingContext(sc, 900)
-
-    # Параметры Kafka
-    kafkaParams = {"metadata.broker.list": "kafka:9092"}
-    topic = "feeds"
-
-    # Создание DStream для чтения данных из Kafka
-    kafkaStream = KafkaUtils.createDirectStream(ssc, [topic], kafkaParams)
-
-    # Обработка данных из Kafka и запись количества сообщений в файл
-    kafkaStream.foreachRDD(process_time)
-
-    # Запуск потоковой обработки
-    ssc.start()
-    # Ожидание завершения
-    ssc.awaitTermination()
