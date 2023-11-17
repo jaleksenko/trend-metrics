@@ -3,8 +3,9 @@ from sparknlp.annotator import Tokenizer, SentenceDetector, StopWordsCleaner
 from pyspark.ml import Pipeline
 
 def nlp_pipeline_setup():
+    # DocumentAssembler takes 'all_titles' as the input column
     document = DocumentAssembler() \
-        .setInputCol("title") \
+        .setInputCol("all_titles") \
         .setOutputCol("document")
 
     sentence = SentenceDetector() \
