@@ -1,4 +1,5 @@
 import sparknlp
+# from pyspark.sql import SparkSession
 from sparknlp.base import DocumentAssembler, Finisher
 from sparknlp.annotator import Tokenizer, Normalizer, LemmatizerModel, StopWordsCleaner, NGramGenerator
 
@@ -8,34 +9,45 @@ from pyspark.sql.functions import from_json, explode, col, length, to_timestamp,
 
 import datetime
 from pyspark.sql.functions import lit
-from cassandra import create_cassandra_table
+from cassandra_tables import create_cassandra_table
+
 
 # Function to write batch data to Cassandra
-def write_to_cassandra(batch_df, 
-                       table="tokens_hour", 
-                       keyspace="your_keyspace",
-                       ttl="10800"):
+def write_to_cassandra(batch_df, batch_id, table="keywords_hour", keyspace="keywords", ttl="10800"):
+    # Empty DataFrame check
+    if batch_df.rdd.isEmpty():
+        print(f"Batch {batch_id} is empty.")
+        return
 
-    # Obtain the current date and hour for data grouping
+    print(f"Processing batch {batch_id}")
+
+    # Obtain the current date and hour
     current_time = datetime.datetime.now()
     date_str = current_time.strftime("%Y-%m-%d")
     hour_int = current_time.hour
 
-    # Add columns for date and hour to the DataFrame
+     # Add columns for date and hour to the DataFrame
     batch_df_with_time = batch_df.withColumn("date", lit(date_str)) \
                                 .withColumn("hour", lit(hour_int))
 
     # Group by date, hour, and token, then count mentions
-    aggregated_df = batch_df_with_time.groupBy("date", "hour", "token") \
+    aggregated_df = batch_df_with_time.groupBy("date", "hour", "keyword") \
                                       .count()
 
-    # Write the aggregated data to Cassandra with a TTL (Time-To-Live)
+    # Logging function
+    # print(f"Writing to Cassandra table {table} in keyspace {keyspace}")
+    # aggregated_df.show(truncate=False)
+
+    # Write the aggregated data to Cassandra with a TTL
     (aggregated_df.write
                   .format("org.apache.spark.sql.cassandra")
                   .options(table=table, keyspace=keyspace)
-                  .option("ttl", ttl)  # TTL in seconds
+                  .option("ttl", ttl)  # TTL в секундах
                   .mode("append")
                   .save())
+
+    # print(f"Batch {batch_id} successfully written to Cassandra.")
+
 
 # Function to create an NLP pipeline with Spark NLP
 def nlp_pipeline(input_col):
@@ -55,12 +67,12 @@ def nlp_pipeline(input_col):
     ])
 
 def main():
-    
     # Create Cassandra tables
     create_cassandra_table()
 
     # Initialize Spark session with Spark NLP
     spark = sparknlp.start()
+    spark.conf.set("spark.cassandra.connection.host", "cassandra")
     spark.sparkContext.setLogLevel("WARN")
 
     # Read streaming data from Kafka
@@ -100,8 +112,8 @@ def main():
     processed_df = processed_df.withColumn("id", explode(col("ids")))
 
     # Convert lists of unigrams and bigrams to strings
-    df_unigrams = processed_df.select("id", explode(col("lemma_features")).alias("token")).filter(length(col("token")) > 1)
-    df_bigrams = processed_df.select("id", explode(col("ngram_features")).alias("token")).filter(length(col("token")) > 1)
+    df_unigrams = processed_df.select("id", explode(col("lemma_features")).alias("keyword")).filter(length(col("keyword")) > 1)
+    df_bigrams = processed_df.select("id", explode(col("ngram_features")).alias("keyword")).filter(length(col("keyword")) > 1)
 
     # Combine unigrams and bigrams into a single DataFrame
     df_combined = df_unigrams.union(df_bigrams)
@@ -110,7 +122,7 @@ def main():
     query = df_combined.writeStream \
         .outputMode("update") \
         .foreachBatch(write_to_cassandra) \
-        .trigger(processingTime='10 minutes') \
+        .trigger(processingTime='15 minutes') \
         .start()
     
     query.awaitTermination()

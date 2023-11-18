@@ -9,7 +9,7 @@ services:
       - CASSANDRA_RACK=myRack
       - CASSANDRA_PASSWORD=cassandra
     volumes:
-      - '/var/www/trend_metrics/cassandra/data:/var/lib/cassandra'
+      - './cassandra/data:/var/lib/cassandra'
     ports:
       - '9042:9042'
     networks:

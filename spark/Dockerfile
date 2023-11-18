@@ -14,7 +14,8 @@ RUN export JAVA_HOME
 
 # Upgrade pip and install Python packages
 RUN pip3 install --upgrade pip && \
-    pip3 install pyspark==3.5.0 spark-nlp==5.1.4 scikit-learn==1.3.2
+    pip3 install pyspark==3.5.0 spark-nlp==5.1.4 scikit-learn==1.3.2 \
+    cassandra-driver==3.28.0
 
 # Add a user with less privileges
 ENV NB_USER spark
@@ -31,6 +32,13 @@ COPY --chown=${NB_USER} ./apps /home/${NB_USER}/apps
 COPY --chown=${NB_USER} ./data /home/${NB_USER}/data
 
 # The default command that runs when the container starts
-# CMD ["tail", "-f", "/dev/null"]
-CMD ["/usr/local/bin/spark-submit", "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,com.johnsnowlabs.nlp:spark-nlp_2.12:5.1.4", "/home/spark/apps/spark_processing.py"]
+CMD ["tail", "-f", "/dev/null"]
 
+# CMD [ \
+#     "/usr/local/bin/spark-submit", \
+#     "--packages", \
+#     "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,", \
+#     "com.johnsnowlabs.nlp:spark-nlp_2.12:5.1.4,", \
+#     "com.datastax.spark:spark-cassandra-connector_2.12:3.5.0", \
+#     "/home/spark/apps/spark_processing.py" \
+# ]

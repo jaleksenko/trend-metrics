@@ -14,8 +14,6 @@ services:
     volumes:  
       - './apps:/home/spark/apps'
       - './data:/home/spark/data'
-    # command: >
-    #   bash -c "tail -f /dev/null"
     networks:
       - network
 
