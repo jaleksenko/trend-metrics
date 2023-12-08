@@ -1,7 +1,12 @@
 version: '3.8'
+x-common-env: &common-env
+  env_file:
+    - .env
+
 services:
   spark-master:
-    build: .
+    image: spark:latest
+    <<: *common-env
     environment:
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
@@ -9,16 +14,22 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
     ports:
-      - '7000:8080'
-      - '7077:7077'
+      - 7000:8080
+      - 7077:7077
     volumes:  
-      - './apps:/home/spark/apps'
-      - './data:/home/spark/data'
+      - ./apps:/app/spark/apps
+      - ivy_cache:/root/.ivy2/cache
+      - ivy_jars:/root/.ivy2/jars
+      - cache_pretrained:/root/cache_pretrained
+      - checkpoints:/app/spark/checkpoints
+      - stream_checkpoints:/app/spark/stream_checkpoints
+    restart: on-failure:1
     networks:
       - network
 
   spark-worker1:
-    build: .
+    image: spark:latest
+    <<: *common-env
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
@@ -26,17 +37,24 @@ services:
       - SPARK_WORKER_MEMORY=4G
       - SPARK_DAEMON_MEMORY=1G
     ports:
-      - '7001:8081'
-    volumes:
-      - './apps:/home/spark/apps'
-      - './data:/home/spark/data'
+      - 7001:8081
+    volumes:  
+      - ./apps:/app/spark/apps
+      # - ./conf:/app/spark/conf
+      - ivy_cache:/root/.ivy2/cache
+      - ivy_jars:/root/.ivy2/jars
+      - cache_pretrained:/root/cache_pretrained
+      - checkpoints_worker1:/app/spark/checkpoints
+      - stream_checkpoints_worker1:/app/spark/stream_checkpoints
     depends_on:
       - spark-master
+    restart: on-failure:1
     networks:
       - network
 
   spark-worker2:
-    build: .
+    image: spark:latest
+    <<: *common-env
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
@@ -44,14 +62,31 @@ services:
       - SPARK_WORKER_MEMORY=4G
       - SPARK_DAEMON_MEMORY=1G
     ports:
-      - '7002:8081'
-    volumes:
-      - './apps:/home/spark/apps'
-      - './data:/home/spark/data'
+      - 7002:8081
+    volumes:  
+      - ./apps:/app/spark/apps
+      # - ./conf:/app/spark/conf
+      - ivy_cache:/root/.ivy2/cache
+      - ivy_jars:/root/.ivy2/jars
+      - cache_pretrained:/root/cache_pretrained
+      - checkpoints_worker2:/app/spark/checkpoints
+      - stream_checkpoints_worker2:/app/spark/stream_checkpoints
     depends_on:
       - spark-master
+    restart: on-failure:1
     networks:
       - network
+
+volumes:
+  ivy_cache:
+  ivy_jars:
+  cache_pretrained:
+  checkpoints:
+  stream_checkpoints:
+  checkpoints_worker1:
+  stream_checkpoints_worker1:
+  checkpoints_worker2:
+  stream_checkpoints_worker2:
 
 networks:
   network:

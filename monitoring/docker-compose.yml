@@ -1,0 +1,57 @@
+version: '3.8'
+x-common-env: &common-env
+  env_file:
+    - .env
+
+services:
+  prometheus:
+    image: prom/prometheus
+    <<: *common-env
+    volumes:
+      - ./prometheus:/etc/prometheus
+    ports:
+      - "9090:9090"
+    restart: on-failure:3
+    networks:
+      - network
+
+  statsd-exporter:
+    image: prom/statsd-exporter
+    <<: *common-env
+    volumes:
+      - ./statsd-exporter/statsd_mapping.yml:/tmp/statsd_mapping.yml
+    command:
+      - --statsd.listen-udp=:8125
+      - --statsd.listen-tcp=:8125
+      - --web.listen-address=:9102
+      - --statsd.mapping-config=/tmp/statsd_mapping.yml
+    ports:
+      - "8125:8125/udp"
+      - "9102:9102"
+    restart: on-failure:3
+    networks:
+      - network
+
+  grafana:
+    image: grafana/grafana:10.2.0
+    <<: *common-env
+    volumes:
+      - ./grafana:/var/lib/grafana
+    environment:
+      - GF_INSTALL_PLUGINS=hadesarchitect-cassandra-datasource
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+    ports:
+      - "4000:3000"   # External port 4000, Internal port 3000
+    depends_on:
+      - prometheus
+    restart: on-failure:3
+    networks:
+      - network
+
+volumes:
+  grafana:
+
+networks:
+  network:
+    external: true

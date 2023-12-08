@@ -1,0 +1,76 @@
+title,url,last_updated
+"BBC News World","https://feeds.bbci.co.uk/news/world/rss.xml",0
+"BBC News Asia","https://feeds.bbci.co.uk/news/world/asia/rss.xml",0
+"BBC News UK","https://feeds.bbci.co.uk/news/uk/rss.xml",0
+"BBC News Health","https://feeds.bbci.co.uk/news/health/rss.xml",0
+"BBC News Business","https://feeds.bbci.co.uk/news/business/rss.xml",0
+"BBC News Technology","https://feeds.bbci.co.uk/news/technology/rss.xml",0
+"BBC Science & Environment","https://feeds.bbci.co.uk/news/science_and_environment/rss.xml?edition=uk",0
+"NYTimes World","https://rss.nytimes.com/services/xml/rss/nyt/World.xml",0
+"NYTimes Africa","https://rss.nytimes.com/services/xml/rss/nyt/Africa.xml",0
+"NYTimes Americas","https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml",0
+"NYTimes Asia Pacific","https://rss.nytimes.com/services/xml/rss/nyt/AsiaPacific.xml",0
+"NYTimes Europe","https://rss.nytimes.com/services/xml/rss/nyt/Europe.xml",0
+"NYTimes Middle East","https://rss.nytimes.com/services/xml/rss/nyt/MiddleEast.xml",0
+"NYTimes US","https://rss.nytimes.com/services/xml/rss/nyt/US.xml",0
+"NYTimes Education","https://rss.nytimes.com/services/xml/rss/nyt/Education.xml",0
+"NYTimes Politics","https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml",0
+"NYTimes Business","https://rss.nytimes.com/services/xml/rss/nyt/Business.xml",0
+"NYTimes Energy & Environment","https://rss.nytimes.com/services/xml/rss/nyt/EnergyEnvironment.xml",0
+"NYTimes Small Business","https://rss.nytimes.com/services/xml/rss/nyt/SmallBusiness.xml",0
+"NYTimes Economy","https://rss.nytimes.com/services/xml/rss/nyt/Economy.xml",0
+"NYTimes Your Money","https://rss.nytimes.com/services/xml/rss/nyt/YourMoney.xml",0
+"NYTimes Technology","https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",0
+"NYTimes Personal Tech","https://rss.nytimes.com/services/xml/rss/nyt/PersonalTech.xml",0
+"NYTimes Science","https://rss.nytimes.com/services/xml/rss/nyt/Science.xml",0
+"NYTimes Environment","https://rss.nytimes.com/services/xml/rss/nyt/Climate.xml",0
+"NYTimes Space & Cosmos","https://rss.nytimes.com/services/xml/rss/nyt/Space.xml",0
+"NYTimes Health","https://rss.nytimes.com/services/xml/rss/nyt/Health.xml",0
+"Al Jazeera","https://aljazeera.com/xml/rss/all.xml",0
+"Defense News Home Page","https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml",0
+"Defense News Air","https://www.defensenews.com/arc/outboundfeeds/rss/category/air/?outputType=xml",0
+"Defense News Land","https://www.defensenews.com/arc/outboundfeeds/rss/category/land/?outputType=xml",0
+"Defense News Naval","https://www.defensenews.com/arc/outboundfeeds/rss/category/naval/?outputType=xml",0
+"Defense News Pentagon","https://www.defensenews.com/arc/outboundfeeds/rss/category/pentagon/?outputType=xml",0
+"Defense News Space","https://www.defensenews.com/arc/outboundfeeds/rss/category/space/?outputType=xml",0
+"Defense News Training & Sim","https://www.defensenews.com/arc/outboundfeeds/rss/category/training-sim/?outputType=xml",0
+"Defense News Unmanned","https://www.defensenews.com/arc/outboundfeeds/rss/category/unmanned/?outputType=xml",0
+"Defense News Global","https://www.defensenews.com/arc/outboundfeeds/rss/category/global/?outputType=xml",0
+"Defense News Industry","https://www.defensenews.com/arc/outboundfeeds/rss/category/industry/?outputType=xml",0
+"Defense News Interviews","https://www.defensenews.com/arc/outboundfeeds/rss/category/interviews/?outputType=xml",0
+"Defense News Opinion","https://www.defensenews.com/arc/outboundfeeds/rss/category/opinion/?outputType=xml",0
+"Yahoo News Latest News & Headlines","https://yahoo.com/news/rss",0
+"Yahoo News US","https://news.yahoo.com/us/rss",0
+"Yahoo News World","https://news.yahoo.com/world/rss",0
+"Yahoo News Politics","https://news.yahoo.com/politics/rss",0
+"Yahoo News Finance","https://finance.yahoo.com/news/rssindex",0
+"Yahoo News Science","https://news.yahoo.com/science/rss",0
+"E-International Relations","https://www.e-ir.info/feed/",0
+"The Cipher Brief","https://thecipherbrief.com/feed",0
+"Viral Now","https://viralnow.uk/feed",0
+"The Messenger","https://themessenger.com/rss/default.xml",0
+"Times of India World","https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",0
+"Times of India Top Stories","https://timesofindia.indiatimes.com/rssfeedstopstories.cms",0
+"Times of India India","http://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms",0
+"Times of India Business","http://timesofindia.indiatimes.com/rssfeeds/1898055.cms",0
+"Times of India Science","http://timesofindia.indiatimes.com/rssfeeds/-2128672765.cms",0
+"Times of India Environment","http://timesofindia.indiatimes.com/rssfeeds/2647163.cms",0
+"Times of India Tech","http://timesofindia.indiatimes.com/rssfeeds/66949542.cms",0
+"Times of India Auto","https://timesofindia.indiatimes.com/rssfeeds/74317216.cms",0
+"CNBC World","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100727362",0
+"CNBC US","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15837362",0
+"CNBC Asia","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19832390",0
+"CNBC Europe","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19794221",0
+"CNBC Business","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147",0
+"CNBC Earnings","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839135",0
+"CNBC Economy","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258",0
+"CNBC Finance","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664",0
+"CNBC Technology","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",0
+"CNBC Politics","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000113",0
+"CNBC Health","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000108",0
+"CNBC Real Estate","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000115",0
+"CNBC Wealth","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001054",0
+"CNBC Auto","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000101",0
+"CNBC Energy","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19836768",0
+"CNBC Investing","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839069",0
+"CNBC Financial Advisors","https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100646281",0

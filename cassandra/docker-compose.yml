@@ -1,19 +1,31 @@
 version: '3'
+x-common-env: &common-env
+  env_file:
+    - .env
+
 services:
   cassandra:
     image: 'cassandra:latest'
+    <<: *common-env
+    user: "1003:1003"
     environment:
       - CASSANDRA_SEEDS=cassandra
       - CASSANDRA_CLUSTER_NAME=myCluster
       - CASSANDRA_DC=myDC
       - CASSANDRA_RACK=myRack
-      - CASSANDRA_PASSWORD=cassandra
+      - CQL_HISTORY=/cassandra_history/.cassandra_history
     volumes:
-      - './cassandra/data:/var/lib/cassandra'
+      - ./conf:/etc/cassandra/
+      - ./data:/var/lib/cassandra
+      - cassandra_history:/cassandra_history
     ports:
       - '9042:9042'
+    restart: on-failure:1
     networks:
       - network
+
+volumes:
+  cassandra_history:
 
 networks:
   network:

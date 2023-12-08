@@ -1,0 +1,35 @@
+startDelaySeconds: 0
+hostPort: broker:9101
+ssl: false
+lowercaseOutputName: false
+lowercaseOutputLabelNames: false
+whitelistObjectNames: ["kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec,*"]
+rules:
+  - pattern: 'kafka.server<type=BrokerTopicMetrics, name=(.+), topic=(.+), partition=(.*)><>OneMinuteRate'
+    name: kafka_server_brokertopicmetrics_$1
+    type: GAUGE
+    labels:
+      topic: "$2"
+      partition: "$3"
+  - pattern: 'kafka.server<type=BrokerTopicMetrics, name=MessagesInPerSec, topic=(.+)><>(Count|OneMinuteRate)'
+    name: kafka_server_brokertopicmetrics_messagesin_$2
+    type: GAUGE
+    labels:
+      topic: "$1"
+  - pattern: 'kafka.log<type=Log, name=Size, topic=(.+), partition=(.*)><>Value'
+    name: kafka_log_size_bytes
+    type: GAUGE
+    labels:
+      topic: "$1"
+      partition: "$2"
+  - pattern: 'kafka.server<type=ReplicaManager, name=(.+), topic=(.+), partition=(.*)><>Value'
+    name: kafka_server_replicamanager_$1
+    type: GAUGE
+    labels:
+      topic: "$2"
+      partition: "$3"
+  - pattern: 'java.lang<type=Memory><HeapMemoryUsage>used'
+    name: jvm_memory_bytes_used
+    type: GAUGE
+
+

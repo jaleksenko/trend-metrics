@@ -1,0 +1,9 @@
+psycopg2-binary
+statsd
+virtualenv
+confluent_kafka
+cassandra-driver==3.28.0
+feedparser
+pandas
+uuid
+

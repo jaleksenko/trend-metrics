@@ -1,0 +1,10 @@
+mappings:
+- match: airflow.channels_total
+  name: "channels_total"
+  help: "Total number of channels"
+- match: airflow.kafka_messages_new
+  name: "kafka_messages_new"
+  help: "New kafka messages in feeds topic"
+- match: airflow.kafka_messages_total
+  name: "kafka_messages_total"
+  help: "Total kafka messages in feeds topic"

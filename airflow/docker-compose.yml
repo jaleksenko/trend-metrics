@@ -1,0 +1,115 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    restart: on-failure:1
+    networks:
+      - network
+  
+  redis:
+    image: redis:latest
+    expose:
+      - 6379
+    restart: on-failure:1
+    networks:
+      - network
+
+  airflow-webserver:
+    image: airflow:latest
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./airflow.cfg:/opt/airflow/airflow.cfg
+      - ../scripts/feeds:/opt/airflow/feeds
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+      - AIRFLOW__CELERY__BROKER_URL=redis://:@redis:6379/0
+      - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:airflow@postgres/airflow
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__METRICS__STATSD_ON=True
+      - AIRFLOW__METRICS__STATSD_HOST=statsd-exporter
+      - AIRFLOW__METRICS__STATSD_PORT=8125
+      - AIRFLOW__METRICS__STATSD_PREFIX=airflow
+    restart: on-failure:2
+    networks:
+      - network
+  
+  airflow-scheduler:
+    image: airflow:latest
+    depends_on:
+      - postgres
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./airflow.cfg:/opt/airflow/airflow.cfg
+      - ../scripts/feeds:/opt/airflow/feeds
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+      - AIRFLOW__CELERY__BROKER_URL=redis://:@redis:6379/0
+      - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:airflow@postgres/airflow
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__METRICS__STATSD_ON=True
+      - AIRFLOW__METRICS__STATSD_HOST=statsd-exporter
+      - AIRFLOW__METRICS__STATSD_PORT=8125
+      - AIRFLOW__METRICS__STATSD_PREFIX=airflow
+    restart: on-failure:2
+    networks:
+      - network
+    command: ["airflow", "scheduler"]
+
+  airflow-worker:
+    image: airflow:latest
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./airflow.cfg:/opt/airflow/airflow.cfg
+      - ../scripts/feeds:/opt/airflow/feeds
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres/airflow
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CELERY__BROKER_URL=redis://redis:6379/0
+      - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:airflow@postgres/airflow
+      - AIRFLOW__CELERY__BROKER_CONNECTION_RETRY_ON_STARTUP=Trueogs
+      - AIRFLOW__METRICS__STATSD_ON=True
+      - AIRFLOW__METRICS__STATSD_HOST=statsd-exporter
+      - AIRFLOW__METRICS__STATSD_PORT=8125
+      - AIRFLOW__METRICS__STATSD_PREFIX=airflow
+    restart: on-failure:2
+    networks:
+      - network
+    command: ["airflow", "celery", "worker"]
+
+  # airflow-triggerer:
+  #   image: airflow:latest
+  #   restart: always
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - network
+  #   command: ["airflow", "triggerer"]
+
+volumes:
+  postgres-db-volume:
+
+networks:
+  network:
+    external: true
