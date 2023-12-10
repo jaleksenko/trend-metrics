@@ -130,4 +130,4 @@ For larger scale visualizations, the implementation can be achieved using REST A
 
 ## Demo Dashboard
 The project's demo dashboard is available at:
-[http://deeplogic.ch:4000](http://deeplogic.ch:4000/d/cf2b5d41-6049-4d61-a182-90099b833490/trendmetrics?orgId=1&from=1701971715821&to=1702058115821&theme=light)
+[http://deeplogic.ch:4000](http://deeplogic.ch:4000/d/cf2b5d41-6049-4d61-a182-90099b833490/trendmetrics?orgId=1&refresh=30s)
