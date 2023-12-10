@@ -1,7 +1,6 @@
 # Big Data Trend Metrics Project 
 
-An integrated big data solution for real-time monitoring and in-depth analysis of news trends.
-This system is designed for real-time analysis of news feeds and visualization of commonly used words and expressions. It utilizes a wide range of technologies for various tasks, from data streaming to machine learning and analytics.
+An innovative solution that integrates key big data technologies for the real-time monitoring and in-depth analysis of news trends. This robust system excels in processing and visualizing the most talked-about topics, leveraging a multitude of tech stacks such as Kafka, Spark, and Cassandra paired with machine learning for advanced analytics.
 
 ## Tech Stack
 - Apache Kafka
