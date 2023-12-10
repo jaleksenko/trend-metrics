@@ -1,6 +1,6 @@
 # Big Data Trend Metrics Project 
 
-An Integrated Big Data Solution for Real-Time Monitoring and In-Depth Analysis of news Trends.
+An integrated big data solution for real-time monitoring and in-depth analysis of news trends.
 This system is designed for real-time analysis of news feeds and visualization of commonly used words and expressions. It utilizes a wide range of technologies for various tasks, from data streaming to machine learning and analytics.
 
 ## Tech Stack
